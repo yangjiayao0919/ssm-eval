@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crud.dao.EvalMapper">
+  <resultMap id="BaseResultMap" type="com.crud.bean.Eval">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="space_num" jdbcType="INTEGER" property="spaceNum" />
+    <result column="GDP" jdbcType="BIGINT" property="gdp" />
+    <result column="company_num" jdbcType="INTEGER" property="companyNum" />
+    <result column="super_company_num" jdbcType="INTEGER" property="superCompanyNum" />
+    <result column="school_num" jdbcType="INTEGER" property="schoolNum" />
+    <result column="people_num" jdbcType="INTEGER" property="peopleNum" />
+    <result column="support" jdbcType="INTEGER" property="support" />
+    <result column="fever" jdbcType="INTEGER" property="fever" />
+    <result column="facilities" jdbcType="INTEGER" property="facilities" />
+    <result column="area" jdbcType="INTEGER" property="area" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, city, space_num, GDP, company_num, super_company_num, school_num, people_num, 
+    support, fever, facilities, area, score
+  </sql>
+
+  <select id="selectByExample" parameterType="com.crud.bean.EvalExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from eval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from eval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from eval
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from eval
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.crud.bean.EvalExample">
+    delete from eval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.crud.bean.Eval">
+    insert into eval (id, city, space_num, 
+      GDP, company_num, super_company_num, 
+      school_num, people_num, support, 
+      fever, facilities, area, 
+      score)
+    values (#{id,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{spaceNum,jdbcType=INTEGER}, 
+      #{gdp,jdbcType=BIGINT}, #{companyNum,jdbcType=INTEGER}, #{superCompanyNum,jdbcType=INTEGER}, 
+      #{schoolNum,jdbcType=INTEGER}, #{peopleNum,jdbcType=INTEGER}, #{support,jdbcType=INTEGER}, 
+      #{fever,jdbcType=INTEGER}, #{facilities,jdbcType=INTEGER}, #{area,jdbcType=INTEGER}, 
+      #{score,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.crud.bean.Eval" useGeneratedKeys="true" keyProperty="id">
+    insert into eval
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="spaceNum != null">
+        space_num,
+      </if>
+      <if test="gdp != null">
+        GDP,
+      </if>
+      <if test="companyNum != null">
+        company_num,
+      </if>
+      <if test="superCompanyNum != null">
+        super_company_num,
+      </if>
+      <if test="schoolNum != null">
+        school_num,
+      </if>
+      <if test="peopleNum != null">
+        people_num,
+      </if>
+      <if test="support != null">
+        support,
+      </if>
+      <if test="fever != null">
+        fever,
+      </if>
+      <if test="facilities != null">
+        facilities,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceNum != null">
+        #{spaceNum,jdbcType=INTEGER},
+      </if>
+      <if test="gdp != null">
+        #{gdp,jdbcType=BIGINT},
+      </if>
+      <if test="companyNum != null">
+        #{companyNum,jdbcType=INTEGER},
+      </if>
+      <if test="superCompanyNum != null">
+        #{superCompanyNum,jdbcType=INTEGER},
+      </if>
+      <if test="schoolNum != null">
+        #{schoolNum,jdbcType=INTEGER},
+      </if>
+      <if test="peopleNum != null">
+        #{peopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="support != null">
+        #{support,jdbcType=INTEGER},
+      </if>
+      <if test="fever != null">
+        #{fever,jdbcType=INTEGER},
+      </if>
+      <if test="facilities != null">
+        #{facilities,jdbcType=INTEGER},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.crud.bean.EvalExample" resultType="java.lang.Long">
+    select count(*) from eval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update eval
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spaceNum != null">
+        space_num = #{record.spaceNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.gdp != null">
+        GDP = #{record.gdp,jdbcType=BIGINT},
+      </if>
+      <if test="record.companyNum != null">
+        company_num = #{record.companyNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.superCompanyNum != null">
+        super_company_num = #{record.superCompanyNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.schoolNum != null">
+        school_num = #{record.schoolNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.peopleNum != null">
+        people_num = #{record.peopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.support != null">
+        support = #{record.support,jdbcType=INTEGER},
+      </if>
+      <if test="record.fever != null">
+        fever = #{record.fever,jdbcType=INTEGER},
+      </if>
+      <if test="record.facilities != null">
+        facilities = #{record.facilities,jdbcType=INTEGER},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=INTEGER},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update eval
+    set id = #{record.id,jdbcType=INTEGER},
+      city = #{record.city,jdbcType=VARCHAR},
+      space_num = #{record.spaceNum,jdbcType=INTEGER},
+      GDP = #{record.gdp,jdbcType=BIGINT},
+      company_num = #{record.companyNum,jdbcType=INTEGER},
+      super_company_num = #{record.superCompanyNum,jdbcType=INTEGER},
+      school_num = #{record.schoolNum,jdbcType=INTEGER},
+      people_num = #{record.peopleNum,jdbcType=INTEGER},
+      support = #{record.support,jdbcType=INTEGER},
+      fever = #{record.fever,jdbcType=INTEGER},
+      facilities = #{record.facilities,jdbcType=INTEGER},
+      area = #{record.area,jdbcType=INTEGER},
+      score = #{record.score,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.crud.bean.Eval">
+    update eval
+    <set>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceNum != null">
+        space_num = #{spaceNum,jdbcType=INTEGER},
+      </if>
+      <if test="gdp != null">
+        GDP = #{gdp,jdbcType=BIGINT},
+      </if>
+      <if test="companyNum != null">
+        company_num = #{companyNum,jdbcType=INTEGER},
+      </if>
+      <if test="superCompanyNum != null">
+        super_company_num = #{superCompanyNum,jdbcType=INTEGER},
+      </if>
+      <if test="schoolNum != null">
+        school_num = #{schoolNum,jdbcType=INTEGER},
+      </if>
+      <if test="peopleNum != null">
+        people_num = #{peopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="support != null">
+        support = #{support,jdbcType=INTEGER},
+      </if>
+      <if test="fever != null">
+        fever = #{fever,jdbcType=INTEGER},
+      </if>
+      <if test="facilities != null">
+        facilities = #{facilities,jdbcType=INTEGER},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.crud.bean.Eval">
+    update eval
+    set city = #{city,jdbcType=VARCHAR},
+      space_num = #{spaceNum,jdbcType=INTEGER},
+      GDP = #{gdp,jdbcType=BIGINT},
+      company_num = #{companyNum,jdbcType=INTEGER},
+      super_company_num = #{superCompanyNum,jdbcType=INTEGER},
+      school_num = #{schoolNum,jdbcType=INTEGER},
+      people_num = #{peopleNum,jdbcType=INTEGER},
+      support = #{support,jdbcType=INTEGER},
+      fever = #{fever,jdbcType=INTEGER},
+      facilities = #{facilities,jdbcType=INTEGER},
+      area = #{area,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select score from eval where  id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>
